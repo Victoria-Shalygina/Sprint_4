@@ -14,6 +14,8 @@ public class OrderPage {
     private By nameField = By.xpath("//input[@placeholder='* Имя']");
     private By surnameField = By.xpath("//input[@placeholder='* Фамилия']");
     private By addressField = By.xpath("//input[@placeholder='* Адрес: куда привезти заказ']");
+    private By metroField = By.className("select-search__input");
+    private By metroStation = By.xpath("//div[text()='Черкизовская']");
     private By phoneField = By.xpath("//input[@placeholder='* Телефон: на него позвонит курьер']");
     private By nextButton = By.xpath("//button[text()='Далее']");
 
@@ -26,6 +28,10 @@ public class OrderPage {
         driver.findElement(nameField).sendKeys(name);
         driver.findElement(surnameField).sendKeys(surname);
         driver.findElement(addressField).sendKeys(address);
+
+        driver.findElement(metroField).click();
+        driver.findElement(metroStation).click();
+
         driver.findElement(phoneField).sendKeys(phone);
         driver.findElement(nextButton).click();
     }
