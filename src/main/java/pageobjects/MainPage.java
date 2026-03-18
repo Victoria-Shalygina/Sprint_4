@@ -2,6 +2,10 @@ package pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class MainPage {
 
@@ -22,13 +26,17 @@ public class MainPage {
         driver.findElement(orderBottomButton).click();
     }
 
-    public void clickQuestion(int index) {
-        By questionLocator = By.id("accordion__heading-" + index);
+    public void clickQuestion(int questionIndex) {
+        By questionLocator = By.id("accordion__heading-" + questionIndex);
         driver.findElement(questionLocator).click();
     }
 
-    public String getAnswerText(int index) {
-        By answerLocator = By.id("accordion__panel-" + index);
+    public String getAnswerTextWithWait(int questionIndex) {
+        By answerLocator = By.id("accordion__panel-" + questionIndex);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
+
         return driver.findElement(answerLocator).getText();
     }
 }
