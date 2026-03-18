@@ -40,7 +40,8 @@ public class MainPageTest extends BaseTest {
         MainPage mainPage = new MainPage(driver);
 
         mainPage.clickQuestion(questionIndex);
-        String answer = mainPage.getAnswerText(questionIndex);
+
+        String answer = mainPage.getAnswerTextWithWait(questionIndex);
 
         assertEquals(expectedText, answer);
     }
