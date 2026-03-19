@@ -12,16 +12,26 @@ import static org.junit.Assert.assertTrue;
 public class OrderTest extends BaseTest {
 
     private boolean isTopButton;
+    private String name;
+    private String surname;
+    private String address;
+    private String phone;
+    private String date;
 
-    public OrderTest(boolean isTopButton) {
+    public OrderTest(boolean isTopButton, String name, String surname, String address, String phone, String date) {
         this.isTopButton = isTopButton;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.phone = phone;
+        this.date = date;
     }
 
     @Parameterized.Parameters
-    public static Object[][] getButtons() {
+    public static Object[][] getData() {
         return new Object[][]{
-                {true},
-                {false}
+                {true, "Иван", "Иванов", "Москва", "89999999999", "01.07.2026"},
+                {false, "Петр", "Петров", "Санкт-Петербург", "88888888888", "02.07.2026"}
         };
     }
 
@@ -30,7 +40,6 @@ public class OrderTest extends BaseTest {
 
         MainPage mainPage = new MainPage(driver);
 
-        // Проверяем обе кнопки
         if (isTopButton) {
             mainPage.clickOrderTop();
         } else {
@@ -40,13 +49,13 @@ public class OrderTest extends BaseTest {
         OrderPage orderPage = new OrderPage(driver);
 
         orderPage.fillFirstPage(
-                "Иван",
-                "Иванов",
-                "Москва",
-                "89999999999"
+                name,
+                surname,
+                address,
+                phone
         );
 
-        orderPage.fillSecondPage("01.07.2026");
+        orderPage.fillSecondPage(date);
 
         assertTrue(orderPage.isOrderSuccessful());
     }
