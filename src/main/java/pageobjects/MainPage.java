@@ -2,6 +2,7 @@ package pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -28,13 +29,22 @@ public class MainPage {
 
     public void clickQuestion(int questionIndex) {
         By questionLocator = By.id("accordion__heading-" + questionIndex);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        wait.until(ExpectedConditions.elementToBeClickable(questionLocator));
+
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView();", driver.findElement(questionLocator));
+
         driver.findElement(questionLocator).click();
     }
 
     public String getAnswerTextWithWait(int questionIndex) {
         By answerLocator = By.id("accordion__panel-" + questionIndex);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
 
         return driver.findElement(answerLocator).getText();
